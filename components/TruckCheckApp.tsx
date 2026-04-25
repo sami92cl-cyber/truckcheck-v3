@@ -671,7 +671,8 @@ export default function TruckCheckApp() {
         <input 
           ref={ref} 
           type="file" 
-          accept="image/*" 
+          accept="image/*"
+          capture="environment"
           onChange={handleFileChange} 
           style={{ display:'none' }}
         />
@@ -857,7 +858,8 @@ export default function TruckCheckApp() {
               borderRadius:12,
               background:'white',
               cursor:'crosshair',
-              display:'block'
+              display:'block',
+              touchAction:'none'
             }}
           />
           <span style={{ position:'absolute', bottom:10, left:14, fontSize:12, color:'#c0c8d4', pointerEvents:'none' }}>Signez ici</span>
