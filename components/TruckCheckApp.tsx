@@ -1069,6 +1069,18 @@ export default function TruckCheckApp() {
   )
 
   // DETAIL
+  const detailInfoRows: string[][] = selected ? [
+    ['Contrat', selected.contractNum],
+    ['Locataire', selected.clientName],
+    ['Type', selected.type],
+    ['Date Départ', selected.depart.dateLabel],
+    ...(selected.retour ? [['Date Retour', selected.retour.dateLabel]] : []),
+    ['Kilométrage Départ', selected.depart.km ? Number(selected.depart.km).toLocaleString('fr-FR') + ' km' : '—'],
+    ...(selected.retour ? [['Kilométrage Retour', selected.retour.km ? Number(selected.retour.km).toLocaleString('fr-FR') + ' km' : '—']] : []),
+    ['Carburant Départ', `${selected.depart.carburantLevel} (${selected.carburantType})`],
+    ...(selected.retour ? [['Carburant Retour', `${selected.retour.carburantLevel} (${selected.carburantType})`]] : []),
+  ] : []
+
   if (view==='detail' && selected) return (
     <div style={{ background:'#f0f2f5', minHeight:'100vh', padding:16, display:'flex', flexDirection:'column', gap:16 }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
@@ -1092,17 +1104,7 @@ export default function TruckCheckApp() {
       
       <div style={C}>
         <h2 style={{ fontSize:18, fontWeight:900, color:'#1a1f36', marginBottom:14, marginTop:0 }}>Informations</h2>
-        {[
-          ['Contrat', selected.contractNum],
-          ['Locataire', selected.clientName],
-          ['Type', selected.type],
-          ['Date Départ', selected.depart.dateLabel],
-          selected.retour ? ['Date Retour', selected.retour.dateLabel] : null,
-          ['Kilométrage Départ', selected.depart.km ? Number(selected.depart.km).toLocaleString('fr-FR') + ' km' : '—'],
-          selected.retour ? ['Kilométrage Retour', selected.retour.km ? Number(selected.retour.km).toLocaleString('fr-FR') + ' km' : '—'] : null,
-          ['Carburant Départ', `${selected.depart.carburantLevel} (${selected.carburantType})`],
-          selected.retour ? ['Carburant Retour', `${selected.retour.carburantLevel} (${selected.carburantType})`] : null
-        ] as (string[] | null)[]).filter((item): item is string[] => item !== null).map((item) => (
+        {detailInfoRows.map((item) => (
           <div key={item[0]} style={{ display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid #f0f2f5', fontSize:14 }}>
             <span style={{ color:'#8a94a6' }}>{item[0]}</span>
             <span style={{ fontWeight:600, color:'#1a1f36' }}>{item[1] || '—'}</span>
