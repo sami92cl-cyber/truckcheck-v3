@@ -1102,10 +1102,10 @@ export default function TruckCheckApp() {
           selected.retour ? ['Kilométrage Retour', selected.retour.km ? Number(selected.retour.km).toLocaleString('fr-FR') + ' km' : '—'] : null,
           ['Carburant Départ', `${selected.depart.carburantLevel} (${selected.carburantType})`],
           selected.retour ? ['Carburant Retour', `${selected.retour.carburantLevel} (${selected.carburantType})`] : null
-        ].filter(Boolean).map(([l, v]) => (
-          <div key={l as string} style={{ display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid #f0f2f5', fontSize:14 }}>
-            <span style={{ color:'#8a94a6' }}>{l}</span>
-            <span style={{ fontWeight:600, color:'#1a1f36' }}>{v || '—'}</span>
+        ] as (string[] | null)[]).filter((item): item is string[] => item !== null).map((item) => (
+          <div key={item[0]} style={{ display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid #f0f2f5', fontSize:14 }}>
+            <span style={{ color:'#8a94a6' }}>{item[0]}</span>
+            <span style={{ fontWeight:600, color:'#1a1f36' }}>{item[1] || '—'}</span>
           </div>
         ))}
       </div>
